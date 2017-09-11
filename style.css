@@ -1,0 +1,47 @@
+#video-background {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 75%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+}
+
+.fa {
+    color: blue;
+}
+
+.mainText{
+  color: black;
+  text-align: center;
+}
+
+
+.container {
+  margin: 0 auto;
+  padding: 40px;
+  width: 80%;
+}
+
+.btn {
+  background: rgba(260, 260, 260, 0.6);
+}
+
+.navbar {
+  background: rgba(260, 260, 260, 0.6);
+  color: white;
+}
+
+#searchForm{
+  width: 20%;
+}
+
+h1, .mainText{
+  font-family: 'Cabin', sans-serif;
+}
+
+.panel{
+  background: rgba(260, 260, 260, 0.2);
+}
