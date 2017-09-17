@@ -1,39 +1,40 @@
 var WeatherAPIKey = "52868524724c9712b16e9c2c6e0587e5";
 var GeolocationAPIKey = "AIzaSyB_76h9wfYzSkwQe0PLx2L04pYKe7VQFpE";
 //var widget = Mixcloud.PlayerWidget(document.getElementById('my-widget-iframe'));
-
-
-
 const googleQueryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + GeolocationAPIKey;
 
+//I already forgot what this index is for...
 var index = 0;
 
+//hides the weatherPanel
 $("#weatherPanel").hide();
+
+//plays the video background, still need the backgrounds to change with results...
 $("#video-background").html('<source id="videoSource" src="./media/video/mainScreen.mp4" type="video/mp4">');
 
+
+//if they don't want to share their location, they can type one in...
 function getWeatherWithUserInput() {
 	return new Promise(function(resolve, reject) {
 
-	var location = $("#location").val().trim();
-	var widget = Mixcloud.PlayerWidget(document.getElementById('my-widget-iframe'));
+	 var location = $("#location").val().trim();
+	 var widget = Mixcloud.PlayerWidget(document.getElementById('my-widget-iframe'));
 
-	var weatherCSQueryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "=&appid=" + WeatherAPIKey;
+	 var weatherCSQueryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + location + "=&appid=" + WeatherAPIKey;
 
-$.ajax({
-		url: weatherCSQueryURL,
-		method: "GET"
-	}).done(function(response) {
-			$(".city").html("<h1>" + response.name + " Weather </h1>");
-			$(".wind").html("Wind Speed: " + response.wind.speed);
-			$(".humidity").html("Humidity: " + response.main.humidity);
-			var f_temp = 9/5*(response.main.temp-273)+32;
-			$(".temp").html("Temperature (F) " + Math.floor(f_temp));
-			resolve(response.weather[0].id);
-	});
-   
+    $.ajax({
+		  url: weatherCSQueryURL,
+		  method: "GET"
+	   }).done(function(response) {
+			 $(".city").html("<h1>" + response.name + " Weather </h1>");
+			 $(".wind").html("Wind Speed: " + response.wind.speed);
+			 $(".humidity").html("Humidity: " + response.main.humidity);
+			 var f_temp = 9/5*(response.main.temp-273)+32;
+			 $(".temp").html("Temperature (F) " + Math.floor(f_temp));
+			 resolve(response.weather[0].id);
+	     });
     });
-
-};
+  };
 
 $("#input-location").click(function(event){
     event.preventDefault();
@@ -47,6 +48,21 @@ $("#input-location").click(function(event){
 });
 });
 
+$('#get-location').click(function(event){
+    event.preventDefault();
+    $("#textPanel").hide();
+    $("#weatherPanel").show();
+    getWeatherWithGeo()
+  .then(function(response) {
+    weatherCode = response;
+    console.log(weatherCode);
+    showMix(weatherCode);
+    //showWidget(weatherCode, index)
+});
+});
+
+
+//google geolocation
 function getGeoLocationGoogle() {
 	var googleQueryURL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + GeolocationAPIKey;
     return new Promise(function(resolve, reject) {
@@ -59,22 +75,9 @@ function getGeoLocationGoogle() {
             reject(err);
         })
     })
-
-
 }
-
-$('#get-location').click(function(event){
-    event.preventDefault();
-    $("#textPanel").hide();
-    $("#weatherPanel").show();
-    getWeatherWithGeo()
-	.then(function(response) {
-    weatherCode = response;
-    console.log(weatherCode);
-    showMix(weatherCode);
-    //showWidget(weatherCode, index)
-});
  
+ //passes the google lat/lon to openweather
 function getWeatherWithGeo() {
   return new Promise(function(resolve,reject) {
     getGeoLocationGoogle()
@@ -98,7 +101,9 @@ function getWeatherWithGeo() {
       })
 
 	}
-});
+
+//not sure why this was here...
+//});
 
 /*THUNDERSTORM 200 - 232
 Drizzle to light rain 300-500
@@ -112,18 +117,17 @@ Light breeze 951-955
 Heavy wind 956-959*/
 
 
-
-
+//this bunch of arrays is a placeholder for the DB of mix urls I'm making... 
 function showMix(weatherCode){
   
   const thunder = ["https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fcarlsoncrusher%2Fstoner-doom-metal-mix-2%2F&hide_cover=1&mini=1&autoplay=1", 
                  "https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Ffoxtronaut%2Fgits-lau%2F&hide_cover=1&mini=1&autoplay=1",
                  "https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2FElectricBeardOfDoom%2Felectric-beard-of-doom-episode-90%2F&hide_cover=1&mini=1&autoplay=1"
                   ];
-const lightRain = ["https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fjohncasey1048554%2Ffeat-roy-orbison-harry-dean-stanton-papa-m-dirty-three-jimmie-dale-gilmore-van-morrison%2F&hide_cover=1&mini=1&autoplay=1",
+  const lightRain = ["https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fjohncasey1048554%2Ffeat-roy-orbison-harry-dean-stanton-papa-m-dirty-three-jimmie-dale-gilmore-van-morrison%2F&hide_cover=1&mini=1&autoplay=1",
                   "https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fadamkvasnica3%2Fnew-wave-dream-pop-and-ambient%2F&hide_cover=1&mini=1&autoplay=1",
                    "https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fgreg-wilson5%2Fshoegaze-classics-rarities-volume-one%2F&hide_cover=1&mini=1&autoplay=1"
-];
+                  ];
 const heavyRain = ["https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fegyptienarts%2Ffrederic-chopin-nocturnes%2F&hide_cover=1&mini=1&autoplay=1",
                    "https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Feast_yorkshire_music_club%2Feast-riding-music-club-toru-takemitsu-film-music-part-one%2F&hide_cover=1&mini=1&autoplay=1",
 ];                 "https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.mixcloud.com%2Fjohnsteyaert%2Ftristan-isolde-einleitungliebestod%2F&hide_cover=1&mini=1&autoplay=1"
@@ -155,6 +159,8 @@ const windy = ["https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.m
 ];
 
 
+//we pass in the weather codes and pull up mixes
+// for now it just changes the background of the weather box, want to change the video background too
   if (weatherCode > 199 && weatherCode < 233){
     //thunderstorm
     console.log("thunder");
@@ -201,110 +207,4 @@ const windy = ["https://www.mixcloud.com/widget/iframe/?feed=https%3A%2F%2Fwww.m
 
 
 
-// 	function showWidget(weather, index) {
-// 	var access_token = 'UQgkNPUttah6HpJ8nG';
-
-// 	$.ajax({
-// 		url: 'http://api.mixcloud.com/popular/hot/?access_token=' + access_token,
-// 		method: 'GET',
-// 		dataType: 'json'
-// 	}).done(function(response) {
-
-// 		// Gather music tags for the corresponding weather condition
-// 		var weatherTags = weatherToTag(weather);
-// 		// Eliminate any duplicate URLs in the array
-// 		var mixURLs = unique(findMusicTag(response, weatherTags));
-//     console.log(mixURLs);
-
-// 		// Display mix
-// 		$('#my-widget-iframe').attr('src', 'http://www.mixcloud.com/widget/iframe/?feed=' + mixURLs[index] + '&hide_cover=1&mini=1&light=1&autoplay=1');
-// 		$('#my-widget-iframe').attr('data-URL', mixURLs[index]);
-
-//     var skipBtn = $('<button>');
-//     skipBtn.addClass('btn btn-default');
-//     skipBtn.attr('id', 'skip-btn');
-//     skipBtn.html('Skip')
-//     $('#skip-display').html(skipBtn);
-
-//     var contBtn = $('<button>');
-//     contBtn.addClass('btn btn-default');
-//     contBtn.attr('id', 'cont-btn');
-//     contBtn.html('Resume');
-//     $('#cont-display').html(contBtn);
-
-//     $('#skip-btn').click(function(event) {
-//       event.preventDefault();
-//       widget.pause().then(function() {
-
-//     		var weatherTags = weatherToTag(weatherCode);
-//     		var mixURLs = unique(findMusicTag(response, weatherTags));
-//         skipMix(mixURLs);
-//       });
-//     })
-
-//     $('#cont-btn').click(function(event) {
-//       event.preventDefault();
-//       widget.pause().then(function() {
-//         skipToPrevPos();
-//       })
-//     })
-//   })
-
-// };
-
-// function weatherToTag(weatherCode) {
-// 		if (weatherCode >= 200 && weatherCode <= 599) {
-//       $('#body').css({'background-image': 'url(assets/images/rainBlur.png)', 'background-size': 'cover', 'background-repeat': "no-repeat"});
-// 			$()
-//       //return ['/discover/downtempo/', '/discover/chillout/', '/discover/ambient/'];
-// 		} else if (weatherCode >= 600 && weatherCode <= 622) {
-//        $('#body').css({'background-image': 'url(assets/images/snowBlur.png)', 'background-size': 'cover', 'background-repeat': "no-repeat"});
-// 			//return ['/discover/jazz/', '/discover/minimal/'];
-// 		} else {
-//       $('#body').css({'background-image': 'url(assets/images/sunBlurrier.png)', 'background-size': 'cover', 'background-repeat': "no-repeat"});
-// 			//return ['/discover/beats', '/discover/rap', '/discover/techno/', '/discover/electronica/'];
-// 		}
-// };
-// });
-
-// function showMix
-
-
-
-/*function findMusicTag(response, tagsToFind) {
-	var data = response.data;
-  var mixURLs = [];
-
-	for (i=0; i<data.length; i++) {
-		for (j=0; j<data[i].tags.length; j++) {
-			for (k=0; k<tagsToFind.length; k++) {
-				if (data[i].tags[j].key == tagsToFind[k]) {
-					mixURLs.push(data[i].url)
-				}
-			}
-		}
-	}
-	return mixURLs;
-};*/
-
-/*function unique(list) {
-  var result = [];
-  $.each(list, function(i, e) {
-    if ($.inArray(e, result) == -1) result.push(e);
-  });
-  return result;
-};
-
-function skipMix(array) {
-	var currentMix = $('iframe').attr('data-URL');
-	var newIndex = array.indexOf(currentMix) + 1;
-	if (newIndex < array.length) {
-		index++;
-		showWidget(weatherCode, index);
-	} else if (newIndex = array.length) {
-		index = 0;
-		showWidget(weatherCode, index);
-	};
-
-};*/
 

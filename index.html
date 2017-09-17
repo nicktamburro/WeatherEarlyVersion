@@ -19,59 +19,60 @@
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-        <h1>you are listening to weather</h1>
-    </div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
 
-    <div class="user-response">
-            <form class="navbar-form navbar-right" id="searchForm">
-              <div class="form-group">
-                <label id="enterLocation" for="search"></label>
-                <input type="text" class="form-control" id="location" placeholder="tell us where you are?">
-                <button class="btn btn-default" id="input-location">
+      <div class="navbar-header">
+        <h1>you are listening to weather</h1>
+      </div>
+
+      <div class="user-response">
+        <form class="navbar-form navbar-right" id="searchForm">
+            <div class="form-group">
+              <label id="enterLocation" for="search"></label>
+              <input type="text" class="form-control" id="location" placeholder="tell us where you are?">
+              <button class="btn btn-default" id="input-location">
                 </i> Search</button>
-                <button class="btn btn-default" id="get-location">get my location</button>
-            </form>
+              <button class="btn btn-default" id="get-location">get my location</button>
             </div>
-        </div>
+        </form>
+      </div>
+    </div>
   </div>
-  </div>
-</nav>
+  </nav>
 
 <div class="container">
-        <video autoplay loop id="video-background" muted plays-inline>
-            
-        </video>
+  <video autoplay loop id="video-background" muted plays-inline>
+  </video>
 
-      <div id="textPanel" class="panel panel-default">
-        <div class="panel-body">
-        <h1 class="mainText" id="mainOne">enter your location(or let us grab it)</h1>
-        <h2 class="mainText" id="mainTwo">we'll find you some music that fits your weather</h2>
-        </div>
+  <div id="textPanel" class="panel panel-default">
+    <div class="panel-body">
+      <h1 class="mainText" id="mainOne">enter your location(or let us grab it)</h1>
+      <h2 class="mainText" id="mainTwo">we'll find you some music that fits your weather</h2>
+    </div>
+  </div>
+
+  <div id="weatherPanel" class="panel panel-default">
+    <div class="panel-body">
+      <div class="city"></div>
+        <div class="wind"></div>
+        <div class="humidity"></div>
+        <div class="temp"></div>
+        <div class="code"></div>
+        <div id="geolocation"></div>
       </div>
+    </div>
 
-          <div id="weatherPanel" class="panel panel-default">
-            <div class="panel-body">
-              <div class="city"></div>
-                <div class="wind"></div>
-                <div class="humidity"></div>
-                <div class="temp"></div>
-                <div class="code"></div>
-                <div id="geolocation"></div>
-              </div>
-            </div>
-
-<div id="mix-display">
+    <div id="mix-display">
       <iframe width="50%" height="60" id="my-widget-iframe" frameborder="0"></iframe>
-      <div>
-        <inline id="skip-display"></inline>
-        <inline id="cont-display"></inline>
-      </div>
-</div>
+        <div>
+          <inline id="skip-display"></inline>
+          <inline id="cont-display"></inline>
+        </div>
+    </div>
 
 
+<!-- moved this up into Navbar instead-->
 
 <!-- <div class="user-response">
             <form id="searchForm">
